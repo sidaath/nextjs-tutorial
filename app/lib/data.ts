@@ -8,18 +8,19 @@ import {
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
+import { resolve } from 'path';
 
 export async function fetchRevenue() {
   try {
     // Artificially delay a response for demo purposes.
     // Don't do this in production :)
 
-    // console.log('Fetching revenue data...');
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    console.log('Fetching revenue data...');
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     const data = await sql<Revenue>`SELECT * FROM revenue`;
 
-    // console.log('Data fetch completed after 3 seconds.');
+    console.log('Data fetch completed after 3 seconds.');
 
     return data.rows;
   } catch (error) {
@@ -28,8 +29,17 @@ export async function fetchRevenue() {
   }
 }
 
+export async function killTime(){
+  console.log("killing time for 2 secs")
+  await new Promise((resolve) => setTimeout(resolve,2000));
+  console.log("done killing time")
+}
+
 export async function fetchLatestInvoices() {
   try {
+    console.log('Fetching invoice data...');
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    console.log('Data fetch completed after 1.5 seconds.');
     const data = await sql<LatestInvoiceRaw>`
       SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
       FROM invoices
